@@ -67,6 +67,16 @@
       box-shadow: 0 0 0 4px #e0f2ff;
     }
 
+    .timeline-period {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #0f4c75;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+      display: block;
+    }
+
     .resume-hero {
       background: linear-gradient(135deg, rgba(0, 119, 182, 0.12), rgba(100, 181, 246, 0.12));
       border-bottom: 1px solid rgba(0, 119, 182, 0.12);
@@ -255,8 +265,9 @@
                     <div class="mb-5 important-experiences">
                       <div class="section-title">重要經歷</div>
                       <div class="timeline">
-                        <div class="timeline-item" v-for="experience in importantExperiences" :key="experience.period + experience.fullText">
-                          <h5 class="fw-bold mb-1">{{ experience.fullText }}</h5>
+                        <div class="timeline-item" v-for="experience in importantExperiences" :key="experience.period + experience.company">
+                          <span class="timeline-period">{{ experience.period }}</span>
+                          <h5 class="fw-bold mb-1">{{ experience.company }}</h5>
                           <p v-if="experience.additional" class="mb-0 text-muted">{{ experience.additional }}</p>
                         </div>
                       </div>
@@ -271,7 +282,8 @@
                           :key="achievement.period + achievement.title"
                           :class="{ 'highlight-achievement': achievement.highlight }"
                         >
-                          <h5 class="fw-bold mb-1">{{ achievement.period }} {{ achievement.title }}</h5>
+                          <span class="timeline-period">{{ achievement.period }}</span>
+                          <h5 class="fw-bold mb-1">{{ achievement.title }}</h5>
                           <ul class="mb-0" :class="{ 'highlight-achievement-list': achievement.highlight }">
                             <li v-for="(item, index) in achievement.items" :key="`ach-${achievement.period}-${index}`">{{ item }}</li>
                           </ul>
@@ -355,49 +367,49 @@
           importantExperiences: [
             {
               period: "114/04～114/10",
-              fullText: "114/04～114/10【資傳數位】負責人",
+              company: "【資傳數位】負責人",
             },
             {
               period: "111/10～114/03",
-              fullText: "111/10～114/03【中興保全】京琠科技 軟體部經理",
+              company: "【中興保全】京琠科技 軟體部經理",
             },
             {
               period: "110/07～111/10",
-              fullText: "110/07～111/10【資傳數位】負責人",
+              company: "【資傳數位】負責人",
             },
             {
               period: "103/06～110/06",
-              fullText: "103/06～110/06【博訊科技】專案經理",
+              company: "【博訊科技】專案經理",
             },
             {
               period: "102/10～103/05",
-              fullText: "102/10～103/05【中興保全】技術支援部襄理",
+              company: "【中興保全】技術支援部襄理",
             },
             {
               period: "101/06～102/09",
-              fullText: "101/06～102/09【三民書局】資訊部組長",
+              company: "【三民書局】資訊部組長",
             },
             {
               period: "100/02～101/06",
-              fullText: "100/02～101/06【Freelancer】軟體開發",
+              company: "【Freelancer】軟體開發",
             },
             {
               period: "98/11～100/02",
-              fullText: "98/11～100/02【璞藝資訊】專案經理",
+              company: "【璞藝資訊】專案經理",
               additional: "(開始轉型為軟體開發人員)",
             },
             {
               period: "93/03～97/06",
-              fullText: "93/03～97/06【新儀科技】 業務專員 → 主任 → 產品經理 → 董事協理",
+              company: "【新儀科技】 業務專員 → 主任 → 產品經理 → 董事協理",
               additional: "(離職原因：經營權轉換)",
             },
             {
               period: "91/09～92/02",
-              fullText: "91/09～92/02【台北智慧卡票證】系統工程師",
+              company: "【台北智慧卡票證】系統工程師",
             },
             {
               period: "77/09～91/06",
-              fullText: "77/09～91/06【海巡署】(前 國防部海岸巡防司令部 通資處)",
+              company: "【海巡署】(前 國防部海岸巡防司令部 通資處)",
             },
           ],
           workAchievements: [
