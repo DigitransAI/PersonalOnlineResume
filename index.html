@@ -222,9 +222,11 @@
               <div class="p-5">
                 <div class="row g-5">
                   <div class="col-lg-4">
-                    <div class="mb-5">
-                      <div class="section-title">個人資訊</div>
-                      <p class="mb-1" v-for="(item, index) in personalDetails" :key="`personal-${index}`">{{ item }}</p>
+                    <div class="mb-5 specialties-section">
+                      <div class="section-title">專長</div>
+                      <ul class="list-unstyled mb-0 specialties-list">
+                        <li v-for="(skill, index) in specialties" :key="`skill-${index}`">{{ skill }}</li>
+                      </ul>
                     </div>
 
                     <div class="mb-5">
@@ -234,15 +236,8 @@
                     </div>
 
                     <div class="mb-5">
-                      <div class="section-title">語文能力</div>
-                      <p class="mb-1" v-for="(language, index) in languages" :key="`lang-${index}`">{{ language }}</p>
-                    </div>
-
-                    <div class="mb-5 specialties-section">
-                      <div class="section-title">專長</div>
-                      <ul class="list-unstyled mb-0 specialties-list">
-                        <li v-for="(skill, index) in specialties" :key="`skill-${index}`">{{ skill }}</li>
-                      </ul>
+                      <div class="section-title">個人資訊</div>
+                      <p class="mb-1" v-for="(item, index) in personalDetails" :key="`personal-${index}`">{{ item }}</p>
                     </div>
 
                     <div class="section-title">聯絡方式</div>
