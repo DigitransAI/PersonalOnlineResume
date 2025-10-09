@@ -82,6 +82,10 @@
       color: #0077b6;
     }
 
+    .hero-subtitle {
+      font-size: 1.05rem;
+    }
+
     .tag-pill {
       display: inline-block;
       padding: 0.3rem 0.75rem;
@@ -113,242 +117,354 @@
       font-size: 0.85rem;
       color: #6c757d;
     }
+
+    .fade-enter-active,
+    .fade-leave-active {
+      transition: opacity 0.35s ease;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+      opacity: 0;
+    }
   </style>
 </head>
 <body>
-  <main class="py-5">
-    <div class="container">
-      <section id="login-section" class="d-flex justify-content-center align-items-center min-vh-100">
-        <div class="login-card p-5 text-center">
-          <h1 class="h3 fw-bold mb-3">請輸入訪客密碼</h1>
-          <p class="text-muted mb-4">為保障個人資料安全，請輸入訪客密碼以瀏覽履歷內容。</p>
-          <form id="login-form" class="" autocomplete="off">
-            <div class="mb-4 text-start">
-              <label for="password" class="form-label fw-semibold">訪客密碼</label>
-              <input
-                type="password"
-                class="form-control form-control-lg"
-                id="password"
-                placeholder="請輸入密碼"
-                required
-              />
-              <div id="error-message" class="text-danger small mt-2 d-none">密碼錯誤，請再試一次。</div>
+  <div id="app">
+    <main class="py-5">
+      <div class="container">
+        <transition name="fade" mode="out-in">
+          <section
+            v-if="!isAuthenticated"
+            key="login"
+            class="d-flex justify-content-center align-items-center min-vh-100"
+          >
+            <div class="login-card p-5 text-center">
+              <h1 class="h3 fw-bold mb-3">請輸入訪客密碼</h1>
+              <p class="text-muted mb-4">為保障個人資料安全，請輸入訪客密碼以瀏覽履歷內容。</p>
+              <form @submit.prevent="handleLogin" autocomplete="off">
+                <div class="mb-4 text-start">
+                  <label for="password" class="form-label fw-semibold">訪客密碼</label>
+                  <input
+                    type="password"
+                    class="form-control form-control-lg"
+                    id="password"
+                    ref="passwordField"
+                    placeholder="請輸入密碼"
+                    v-model="password"
+                    @input="error = false"
+                    required
+                  />
+                  <div v-if="error" class="text-danger small mt-2">密碼錯誤，請再試一次。</div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100" style="background-color:#0077b6;border:none;">
+                  登入履歷
+                </button>
+              </form>
             </div>
-            <button type="submit" class="btn btn-primary btn-lg w-100" style="background-color:#0077b6;border:none;">登入履歷</button>
-          </form>
-        </div>
-      </section>
-
-      <section id="resume-section" class="d-none">
-        <div class="resume-card">
-          <div class="resume-hero p-5">
-            <div class="row align-items-center g-4">
-              <div class="col-md-4 text-center">
-                <img src="履歷照片01.PNG.jpg" alt="王礪德" class="img-fluid rounded-4 shadow" />
-              </div>
-              <div class="col-md-8">
-                <div class="hero-name">王礪德</div>
-                <div class="hero-title mb-3">軟體開發與系統整合專家｜專案經理</div>
-                <p class="lead text-secondary mb-4">
-                  超過20年資訊系統開發與專案管理經驗，擅長軟硬體整合、智慧零售與餐飲系統、AI與LINE生態串接，協助企業完成數位轉型與營運創新。
-                </p>
-                <div>
-                  <span class="tag-pill">專案管理</span>
-                  <span class="tag-pill">系統架構設計</span>
-                  <span class="tag-pill">AI應用整合</span>
-                  <span class="tag-pill">POS系統</span>
-                  <span class="tag-pill">LINE Bot</span>
+          </section>
+          <section v-else key="resume">
+            <div class="resume-card">
+              <div class="resume-hero p-5">
+                <div class="row align-items-center g-4">
+                  <div class="col-md-4 text-center">
+                    <img src="履歷照片01.PNG.jpg" alt="王礪德" class="img-fluid rounded-4 shadow" />
+                  </div>
+                  <div class="col-md-8">
+                    <div class="hero-name">王礪德</div>
+                    <div class="hero-title mb-1">{{ heroTitle }}</div>
+                    <div class="hero-subtitle mb-3 text-primary fw-semibold">{{ heroSubtitle }}</div>
+                    <p class="lead text-secondary mb-4">{{ heroSummary }}</p>
+                    <div>
+                      <span class="tag-pill" v-for="tag in heroTags" :key="tag">{{ tag }}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="p-5">
-            <div class="row g-5">
-              <div class="col-lg-4">
-                <div class="mb-5">
-                  <div class="section-title">個人資訊</div>
-                  <p class="mb-1">1966年生於台南市</p>
-                  <p class="mb-1">已婚，三子女皆已工作</p>
-                  <p class="mb-0">配偶：公立托兒所護理師</p>
-                </div>
+              <div class="p-5">
+                <div class="row g-5">
+                  <div class="col-lg-4">
+                    <div class="mb-5">
+                      <div class="section-title">個人資訊</div>
+                      <p class="mb-1" v-for="(item, index) in personalDetails" :key="`personal-${index}`">{{ item }}</p>
+                    </div>
 
-                <div class="mb-5">
-                  <div class="section-title">學歷</div>
-                  <p class="fw-semibold mb-1">國防大學 中正理工學院</p>
-                  <p class="text-muted mb-0">電機系電子工程組</p>
-                </div>
+                    <div class="mb-5">
+                      <div class="section-title">學歷</div>
+                      <p class="fw-semibold mb-1">{{ education.school }}</p>
+                      <p class="text-muted mb-0">{{ education.department }}</p>
+                    </div>
 
-                <div class="mb-5">
-                  <div class="section-title">語言能力</div>
-                  <p class="mb-1">英文：略通</p>
-                  <p class="mb-1">台語：精通</p>
-                  <p class="mb-0">粵語：精通</p>
-                </div>
+                    <div class="mb-5">
+                      <div class="section-title">語文能力</div>
+                      <p class="mb-1" v-for="(language, index) in languages" :key="`lang-${index}`">{{ language }}</p>
+                    </div>
 
-                <div class="mb-5">
-                  <div class="section-title">專長</div>
-                  <ul class="list-unstyled mb-0">
-                    <li>微軟MVC、C#.Net、VB.Net、VB6</li>
-                    <li>資料庫：MS SQL、MySQL、ORACLE、DB2</li>
-                    <li>LINE生態ChatBot整合</li>
-                    <li>AI輔助開發、LLM、RAG、知識圖譜</li>
-                    <li>餐飲與零售POS系統整合</li>
-                    <li>電子發票加值中心建置</li>
-                    <li>RFID與周邊整合</li>
-                    <li>大型專案策略聯盟與系統設計</li>
-                    <li>交通部認證高級電信工程人員</li>
-                    <li>PBX機房與無線電系統規劃</li>
-                  </ul>
-                </div>
-
-                <div class="section-title">聯絡方式</div>
-                <ul class="list-unstyled mb-0">
-                  <li><strong>Email：</strong><a href="mailto:leedewang@example.com" class="text-decoration-none"> leedewang@example.com</a></li>
-                  <li><strong>手機：</strong> 0921-191-693</li>
-                  <li><strong>所在城市：</strong> 台北市</li>
-                </ul>
-              </div>
-
-              <div class="col-lg-8">
-                <div class="mb-5">
-                  <div class="section-title">重點經歷</div>
-                  <div class="timeline">
-                    <div class="timeline-item">
-                      <h5 class="fw-bold mb-1">2021.10 – 2025.03 ｜ 中興保全 京琠科技 軟體部經理</h5>
-                      <p class="text-muted mb-2">部門管理、架構設計、程式開發</p>
-                      <ul class="mb-0">
-                        <li>開店快手餐飲版POS系統底層翻修與架構優化</li>
-                        <li>QRCode掃碼點餐與MQTT通訊伺服器建置</li>
-                        <li>開店快手軟體產品化、自動化版控、LINE註冊系統</li>
-                        <li>總部雲端系統與場館預訂系統架構設計</li>
+                    <div class="mb-5">
+                      <div class="section-title">專長</div>
+                      <ul class="list-unstyled mb-0">
+                        <li v-for="(skill, index) in specialties" :key="`skill-${index}`">{{ skill }}</li>
                       </ul>
                     </div>
-                    <div class="timeline-item">
-                      <h5 class="fw-bold mb-1">2014.06 – 2021.06 ｜ 博訊科技 專案經理</h5>
-                      <p class="text-muted mb-2">專案管理、架構設計、程式開發</p>
-                      <ul class="mb-0">
-                        <li>電子發票加值中心系統核心開發與維運</li>
-                        <li>爭鮮RFID鮮度管理與AI影像辨識專案</li>
-                        <li>自助點餐、軌道送餐與LINE Bot會員系統</li>
-                        <li>長照2.0家訪、消防監控、LoRa水文資訊等多項專案</li>
-                      </ul>
+
+                    <div class="section-title">聯絡方式</div>
+                    <ul class="list-unstyled mb-0">
+                      <li>
+                        <strong>Email：</strong
+                        ><a :href="`mailto:${contact.email}`" class="text-decoration-none"> {{ contact.email }}</a>
+                      </li>
+                      <li><strong>手機：</strong> {{ contact.phone }}</li>
+                      <li><strong>所在城市：</strong> {{ contact.city }}</li>
+                    </ul>
+                  </div>
+
+                  <div class="col-lg-8">
+                    <div class="mb-5">
+                      <div class="section-title">重要經歷</div>
+                      <div class="timeline">
+                        <div class="timeline-item" v-for="experience in importantExperiences" :key="experience.period + experience.fullText">
+                          <h5 class="fw-bold mb-1">{{ experience.fullText }}</h5>
+                          <p v-if="experience.additional" class="mb-0 text-muted">{{ experience.additional }}</p>
+                        </div>
+                      </div>
                     </div>
-                    <div class="timeline-item">
-                      <h5 class="fw-bold mb-1">2012.06 – 2013.09 ｜ 三民書局 資訊部組長</h5>
-                      <ul class="mb-0">
-                        <li>電子發票系統開發與POS前後台維護</li>
-                        <li>出版編輯管理系統功能優化</li>
-                      </ul>
+
+                    <div class="mb-5">
+                      <div class="section-title">主要工作績效</div>
+                      <div class="timeline">
+                        <div class="timeline-item" v-for="achievement in workAchievements" :key="achievement.period + achievement.title">
+                          <h5 class="fw-bold mb-1">{{ achievement.period }} {{ achievement.title }}</h5>
+                          <ul class="mb-0">
+                            <li v-for="(item, index) in achievement.items" :key="`ach-${achievement.period}-${index}`">{{ item }}</li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-                    <div class="timeline-item">
-                      <h5 class="fw-bold mb-1">2004.03 – 2008.06 ｜ 新儀科技 產品經理／董事協理</h5>
-                      <p class="text-muted mb-2">業務、行銷與系統整合</p>
-                      <ul class="mb-0">
-                        <li>POS + DVR影像監控整合與智慧自助結帳系統研發</li>
-                        <li>多元產業POS導入與策略聯盟推動</li>
-                      </ul>
-                    </div>
-                    <div class="timeline-item">
-                      <h5 class="fw-bold mb-1">其他職涯歷程</h5>
-                      <p class="mb-0">
-                        海巡署通資處、台北智慧卡票證、璞藝資訊專案經理、資傳數位負責人、Freelancer軟體開發等多元經驗。
-                      </p>
+
+                    <div class="mb-5">
+                      <div class="section-title">職涯信念</div>
+                      <blockquote class="blockquote ps-3 border-start border-4 border-primary">
+                        <p class="mb-0">「以扎實技術與專案實戰經驗，協助企業完成資訊系統升級與營運創新，讓數據與科技成為組織的驅動力。」</p>
+                      </blockquote>
                     </div>
                   </div>
                 </div>
 
-                <div class="mb-5">
-                  <div class="section-title">代表專案績效</div>
-                  <div class="row g-3">
-                    <div class="col-md-6">
-                      <div class="p-4 border rounded-4 h-100">
-                        <h6 class="fw-bold">電子發票加值中心系統</h6>
-                        <p class="small text-muted mb-2">整合開發｜專案管理｜維運</p>
-                        <p class="mb-0">完成核心系統架構設計與建置，確保高併發與穩定性，協助企業快速接軌電子發票制度。</p>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="p-4 border rounded-4 h-100">
-                        <h6 class="fw-bold">智慧餐飲解決方案</h6>
-                        <p class="small text-muted mb-2">POS整合｜AI應用｜LINE生態</p>
-                        <p class="mb-0">打造涵蓋掃碼點餐、會員行銷到後端分析的智慧餐飲系統，提升營運效率與顧客體驗。</p>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="p-4 border rounded-4 h-100">
-                        <h6 class="fw-bold">智慧供應鏈與場館預訂</h6>
-                        <p class="small text-muted mb-2">雲端架構｜數位轉型</p>
-                        <p class="mb-0">規劃雲端化的供應鏈與預訂系統，建立標準化流程與數據決策機制。</p>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="p-4 border rounded-4 h-100">
-                        <h6 class="fw-bold">LoRa水文資訊與防災系統</h6>
-                        <p class="small text-muted mb-2">物聯網｜即時監測</p>
-                        <p class="mb-0">整合IoT與雲端平台，協助政府單位掌握水情與防災資訊，提升應變效率。</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="mb-5">
-                  <div class="section-title">早期職涯與軍旅</div>
-                  <p class="mb-2">海巡署 (前國防部海岸巡防司令部通資處)</p>
-                  <p class="mb-0">累積資通訊建設與電信工程背景，奠定跨領域整合能力。</p>
-                </div>
-
-                <div class="mb-5">
-                  <div class="section-title">職涯信念</div>
-                  <blockquote class="blockquote ps-3 border-start border-4 border-primary">
-                    <p class="mb-0">「以扎實技術與專案實戰經驗，協助企業完成資訊系統升級與營運創新，讓數據與科技成為組織的驅動力。」</p>
-                  </blockquote>
+                <div class="text-center mt-4">
+                  <a href="王礪德工作簡歷-114.pdf" class="btn btn-download" download>
+                    下載 PDF 履歷
+                  </a>
                 </div>
               </div>
             </div>
-
-            <div class="text-center mt-4">
-              <a href="王礪德工作簡歷-114.pdf" class="btn btn-download" download>
-                下載 PDF 履歷
-              </a>
-            </div>
-          </div>
-        </div>
-        <footer class="text-center py-4">© <span id="year"></span> 王礪德。保留所有權利。</footer>
-      </section>
-    </div>
-  </main>
+            <footer class="text-center py-4">© {{ currentYear }} 王礪德。保留所有權利。</footer>
+          </section>
+        </transition>
+      </div>
+    </main>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="config.js"></script>
   <script>
-    const LOGIN_PASSWORD = "0921191693";
-    const loginForm = document.getElementById("login-form");
-    const passwordInput = document.getElementById("password");
-    const errorMessage = document.getElementById("error-message");
-    const loginSection = document.getElementById("login-section");
-    const resumeSection = document.getElementById("resume-section");
-    const yearLabel = document.getElementById("year");
+    const { createApp } = Vue;
 
-    yearLabel.textContent = new Date().getFullYear();
+    createApp({
+      data() {
+        return {
+          password: "",
+          error: false,
+          isAuthenticated: false,
+          heroTitle: "軟體開發與系統整合專家",
+          heroSubtitle: "商用人工智慧(Artificial Business Intelligence)的先行者",
+          heroSummary:
+            "超過20年資訊系統開發與專案管理經驗，擅長軟硬體整合、智慧零售與餐飲系統、AI與LINE生態串接，協助企業完成數位轉型、AI賦能與營運創新。",
+          heroTags: ["專案管理", "系統架構設計", "AI應用整合", "POS系統", "LINE Bot"],
+          personalDetails: ["1966年 生於 台南市", "已婚 子女三人 皆已工作", "內子為公立托兒所護理師"],
+          education: {
+            school: "國防大學 中正理工學院",
+            department: "電機系電子工程組",
+          },
+          languages: ["英文 略通", "台語 精通", "粵語 精通"],
+          specialties: [
+            "專精微軟技術框架MVC、C#.Net、VB.Net、VB6",
+            "MS SQL、MySQL、ORACLE、DB2",
+            "LINE生態下ChatBot整合應用開發",
+            "AI輔助開發應用、LLM整合應用開發、RAG、知識圖譜技術",
+            "餐飲業、零售流通業POS系統整合開發 (軟體開發、業務、行銷、數位轉型輔導)",
+            "電子發票加值中心 (系統開發、管理維運)",
+            "RFID、POS周邊整合開發",
+            "大型專案策略聯盟推動與系統整合、設計",
+            "認證：交通部認證高級電信工程人員",
+            "電信：PBX機房建置、管理、纜線工程、無線電系統建置規劃、天線工程",
+          ],
+          contact: {
+            email: "leander.tw@gmail.com",
+            phone: "0921-191-693",
+            city: "台北市",
+          },
+          importantExperiences: [
+            {
+              period: "114/04～114/10",
+              fullText: "114/04～114/10【資傳數位】負責人",
+            },
+            {
+              period: "111/10～114/03",
+              fullText: "111/10～114/03【中興保全】京琠科技 軟體部經理",
+            },
+            {
+              period: "110/07～111/10",
+              fullText: "110/07～111/10【資傳數位】負責人",
+            },
+            {
+              period: "103/06～110/06",
+              fullText: "103/06～110/06【博訊科技】專案經理",
+            },
+            {
+              period: "102/10～103/05",
+              fullText: "102/10～103/05【中興保全】技術支援部襄理",
+            },
+            {
+              period: "101/06～102/09",
+              fullText: "101/06～102/09【三民書局】資訊部組長",
+            },
+            {
+              period: "100/02～101/06",
+              fullText: "100/02～101/06【Freelancer】軟體開發",
+            },
+            {
+              period: "98/11～100/02",
+              fullText: "98/11～100/02【璞藝資訊】專案經理",
+              additional: "(開始轉型為軟體開發人員)",
+            },
+            {
+              period: "93/03～97/06",
+              fullText: "93/03～97/06【新儀科技】 業務專員 → 主任 → 產品經理 → 董事協理",
+              additional: "(離職原因：經營權轉換)",
+            },
+            {
+              period: "91/09～92/02",
+              fullText: "91/09～92/02【台北智慧卡票證】系統工程師",
+            },
+            {
+              period: "～91/06",
+              fullText: "～91/06【海巡署】(前 國防部海岸巡防司令部 通資處)",
+            },
+          ],
+          workAchievements: [
+            {
+              period: "111/10～114/03",
+              title: "【京琠科技】部門管理、架構設計、程式開發",
+              items: [
+                "開店快手餐飲版POS系統架構修改、底層翻修",
+                "QRCode掃碼點餐系統架構重新規劃、MQTT通訊伺服器建構",
+                "開店快手軟體產品化、自動化版控、LINE註冊系統",
+                "開店快手總部系統雲端架構設計",
+                "雲端系統、場館預訂系統架構設計、開發指導、專案管理",
+                "智慧供應鏈 (單位裁撤，未完成)",
+              ],
+            },
+            {
+              period: "103/06～110/06",
+              title: "【博訊科技】專案管理、架構設計、程式開發",
+              items: [
+                "電子發票加值中心系統開發、架構設計、核心系統撰寫、專案管理、建置、維運",
+                "爭鮮迴轉壽司 RFID (HF、UHF) 鮮度管理系統 (獨立開發)",
+                "爭鮮迴轉壽司 科專：AI影像辨識智慧上菜鮮度管理系統 (整合開發)",
+                "一条通自助點餐及軌道送餐系統 (後端系統開發)",
+                "開店快手Line Bot會員行銷系統 (獨立開發)",
+                "開店快手POS系統 (後端系統維護)",
+                "長照2.0居家服務家訪系統 (PM)",
+                "防災消防監控系統 (PM)",
+                "石門水庫LoRa水文資訊系統 (PM)",
+                "自助點餐系統 (PM)",
+              ],
+            },
+            {
+              period: "101/06～102/09",
+              title: "【三民書局】MIS、程式開發",
+              items: [
+                "電子發票系統開發",
+                "門市POS系統前後台維護及功能修改",
+                "出版編輯管理系統維護及功能修改",
+              ],
+            },
+            {
+              period: "98/11～100/02",
+              title: "【璞藝資訊】(PM)",
+              items: [
+                "富邦文教基金會綜合活動管理系統介面規劃設計與專案管理",
+                "工研院安全衛生技術中心「國家化學物質查詢系統」使用者介面規劃設計與專案管理",
+                "工研院安全衛生技術中心「管制性化學品運作量登錄流佈資訊服務平台」使用者介面規劃設計與專案管理",
+                "台北縣政府大型網站「北縣人力網(GoodJob)」改版專案管理",
+                "台北市立美術館「北美獎徵件暨評審系統」、「今天美食網」、漾丰國際「PLMM漂亮美眉購物網」電子商務網站專案管理",
+                "「和平旅行社」形象網站規劃設計與專案管理",
+              ],
+            },
+            {
+              period: "93/03～97/06",
+              title: "【新儀科技】(業務、行銷、系統整合)",
+              items: [
+                "科專計畫：工研院加工食品流通履歷科專計畫",
+                "策略合作：國眾電腦、超網路科技策略聯盟推動『有機產業聚落深化專案』",
+                "POS+DVR影像監控收銀設備系統整合",
+                "與亞元國際、鎧騛資訊策略聯盟開發POS收銀整合RFID、語音辨識之智慧型自助結帳系統概念機並於2007 RFID大展進行成果發表展示。",
+                "布樂谷遊樂園區POS系統",
+                "外送外帶茶飲POS + 茶飲網站系統虛實整合專案",
+                "烘焙、寵物、有機、服飾、母嬰用品、書局文具、超商超市、鐘錶精品、運動用品、小型旅宿、休息站賣場、導遊抽佣、3C商品序號管理、手機業、醫美管理系統、團膳系統、各類型餐飲業…等POS系統輔導專案。",
+              ],
+            },
+          ],
+        };
+      },
+      computed: {
+        currentYear() {
+          return new Date().getFullYear();
+        },
+      },
+      methods: {
+        async handleLogin() {
+          this.error = false;
+          const userInput = this.password.trim();
 
-    loginForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-      const isValid = passwordInput.value === LOGIN_PASSWORD;
+          if (!userInput) {
+            this.error = true;
+            return;
+          }
 
-      if (isValid) {
-        loginSection.classList.add("d-none");
-        resumeSection.classList.remove("d-none");
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      } else {
-        errorMessage.classList.remove("d-none");
-        passwordInput.value = "";
-        passwordInput.focus();
-      }
-    });
+          const salt = window.RESUME_CONFIG.passwordSalt;
+          const expectedHash = window.RESUME_CONFIG.passwordHash;
+          const computedHash = await this.hashText(`${salt}${userInput}`);
 
-    passwordInput.addEventListener("input", () => {
-      errorMessage.classList.add("d-none");
-    });
+          if (computedHash === expectedHash) {
+            this.isAuthenticated = true;
+            this.$nextTick(() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+          } else {
+            this.error = true;
+            this.password = "";
+            this.$nextTick(() => {
+              this.$refs.passwordField?.focus();
+            });
+          }
+        },
+        async hashText(text) {
+          const encoder = new TextEncoder();
+          const data = encoder.encode(text);
+          const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+          const hashArray = Array.from(new Uint8Array(hashBuffer));
+          return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+        },
+      },
+      mounted() {
+        if (this.$refs.passwordField) {
+          this.$refs.passwordField.focus();
+        }
+      },
+    }).mount("#app");
   </script>
 </body>
 </html>
