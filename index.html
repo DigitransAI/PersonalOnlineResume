@@ -97,6 +97,43 @@
       font-size: 0.85rem;
     }
 
+    .specialties-section .section-title {
+      font-size: 1.1rem;
+      color: #0f4c75;
+    }
+
+    .specialties-list li {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.35rem;
+    }
+
+    .important-experiences .timeline-item h5 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .important-experiences .timeline-item p {
+      font-size: 0.85rem;
+    }
+
+    .work-achievements .highlight-achievement {
+      background: linear-gradient(135deg, rgba(0, 119, 182, 0.12), rgba(100, 181, 246, 0.12));
+      border-radius: 14px;
+      padding: 1rem 1.25rem 1rem 1.5rem;
+      margin-left: -1.5rem;
+      box-shadow: 0 12px 30px rgba(0, 119, 182, 0.18);
+    }
+
+    .work-achievements .highlight-achievement::before {
+      left: -1.9rem;
+    }
+
+    .work-achievements .highlight-achievement-list li {
+      font-weight: 600;
+      color: #0c4a6e;
+    }
+
     .btn-download {
       background: linear-gradient(135deg, #0077b6, #00b4d8);
       border: none;
@@ -201,9 +238,9 @@
                       <p class="mb-1" v-for="(language, index) in languages" :key="`lang-${index}`">{{ language }}</p>
                     </div>
 
-                    <div class="mb-5">
+                    <div class="mb-5 specialties-section">
                       <div class="section-title">專長</div>
-                      <ul class="list-unstyled mb-0">
+                      <ul class="list-unstyled mb-0 specialties-list">
                         <li v-for="(skill, index) in specialties" :key="`skill-${index}`">{{ skill }}</li>
                       </ul>
                     </div>
@@ -220,7 +257,7 @@
                   </div>
 
                   <div class="col-lg-8">
-                    <div class="mb-5">
+                    <div class="mb-5 important-experiences">
                       <div class="section-title">重要經歷</div>
                       <div class="timeline">
                         <div class="timeline-item" v-for="experience in importantExperiences" :key="experience.period + experience.fullText">
@@ -230,12 +267,17 @@
                       </div>
                     </div>
 
-                    <div class="mb-5">
+                    <div class="mb-5 work-achievements">
                       <div class="section-title">主要工作績效</div>
                       <div class="timeline">
-                        <div class="timeline-item" v-for="achievement in workAchievements" :key="achievement.period + achievement.title">
+                        <div
+                          class="timeline-item"
+                          v-for="achievement in workAchievements"
+                          :key="achievement.period + achievement.title"
+                          :class="{ 'highlight-achievement': achievement.highlight }"
+                        >
                           <h5 class="fw-bold mb-1">{{ achievement.period }} {{ achievement.title }}</h5>
-                          <ul class="mb-0">
+                          <ul class="mb-0" :class="{ 'highlight-achievement-list': achievement.highlight }">
                             <li v-for="(item, index) in achievement.items" :key="`ach-${achievement.period}-${index}`">{{ item }}</li>
                           </ul>
                         </div>
@@ -281,7 +323,17 @@
           heroSubtitle: "商用人工智慧(Artificial Business Intelligence)的先行者",
           heroSummary:
             "超過20年資訊系統開發與專案管理經驗，擅長軟硬體整合、智慧零售與餐飲系統、AI與LINE生態串接，協助企業完成數位轉型、AI賦能與營運創新。",
-          heroTags: ["專案管理", "系統架構設計", "AI應用整合", "POS系統", "LINE Bot"],
+          heroTags: [
+            "專案管理",
+            "系統架構設計",
+            "AI應用整合",
+            "POS系統",
+            "LINE Bot",
+            "電子發票整合",
+            "智慧零售",
+            "專案領導",
+            "系統整合顧問",
+          ],
           personalDetails: ["1966年 生於 台南市", "已婚 子女三人 皆已工作", "內子為公立托兒所護理師"],
           education: {
             school: "國防大學 中正理工學院",
@@ -357,12 +409,13 @@
             {
               period: "111/10～114/03",
               title: "【京琠科技】部門管理、架構設計、程式開發",
+              highlight: true,
               items: [
                 "開店快手餐飲版POS系統架構修改、底層翻修",
                 "QRCode掃碼點餐系統架構重新規劃、MQTT通訊伺服器建構",
                 "開店快手軟體產品化、自動化部署、版控、LINE註冊系統",
                 "開店快手總部系統雲端架構設計",
-				"推動程式碼即規格，資料結構自動化的開發觀念",
+                "推動程式碼即規格，資料結構自動化的開發觀念",
                 "雲端系統、場館預訂系統架構設計、開發指導、專案管理",
                 "智慧供應鏈 (單位裁撤，未完成)",
               ],
@@ -370,6 +423,7 @@
             {
               period: "103/06～110/06",
               title: "【博訊科技】專案管理、架構設計、程式開發",
+              highlight: true,
               items: [
                 "電子發票加值中心系統開發、架構設計、核心系統撰寫、專案管理、建置、維運",
                 "爭鮮迴轉壽司 RFID (HF、UHF) 鮮度管理系統 (獨立開發)",
