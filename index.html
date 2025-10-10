@@ -238,27 +238,6 @@
                         <li v-for="(skill, index) in specialties" :key="`skill-${index}`">{{ skill }}</li>
                       </ul>
                     </div>
-
-                    <div class="mb-5">
-                      <div class="section-title">學歷</div>
-                      <p class="fw-semibold mb-1">{{ education.school }}</p>
-                      <p class="text-muted mb-0">{{ education.department }}</p>
-                    </div>
-
-                    <div class="mb-5">
-                      <div class="section-title">個人資訊</div>
-                      <p class="mb-1" v-for="(item, index) in personalDetails" :key="`personal-${index}`">{{ item }}</p>
-                    </div>
-
-                    <div class="section-title">聯絡方式</div>
-                    <ul class="list-unstyled mb-0">
-                      <li>
-                        <strong>Email：</strong
-                        ><a :href="`mailto:${contact.email}`" class="text-decoration-none"> {{ contact.email }}</a>
-                      </li>
-                      <li><strong>手機：</strong> {{ contact.phone }}</li>
-                      <li><strong>所在城市：</strong> {{ contact.city }}</li>
-                    </ul>
                   </div>
 
                   <div class="col-lg-8">
@@ -298,6 +277,28 @@
                       </blockquote>
                     </div>
                   </div>
+                  <div class="col-lg-4">
+                    <div class="mb-5">
+                      <div class="section-title">學歷</div>
+                      <p class="fw-semibold mb-1">{{ education.school }}</p>
+                      <p class="text-muted mb-0">{{ education.department }}</p>
+                    </div>
+
+                    <div class="mb-5">
+                      <div class="section-title">個人資訊</div>
+                      <p class="mb-1" v-for="(item, index) in personalDetails" :key="`personal-${index}`">{{ item }}</p>
+                    </div>
+
+                    <div class="section-title">聯絡方式</div>
+                    <ul class="list-unstyled mb-0">
+                      <li>
+                        <strong>Email：</strong
+                        ><a :href="`mailto:${contact.email}`" class="text-decoration-none"> {{ contact.email }}</a>
+                      </li>
+                      <li><strong>手機：</strong> {{ contact.phone }}</li>
+                      <li><strong>所在城市：</strong> {{ contact.city }}</li>
+                    </ul>
+                  </div>				  
                 </div>
 
                 <div class="text-center mt-4">
@@ -332,16 +333,15 @@
             "超過20年資訊系統開發與專案管理經驗，擅長軟硬體整合、智慧零售與餐飲系統、AI與LINE生態串接，協助企業完成數位轉型、AI賦能與營運創新。",
           heroTags: [
             "專案管理",
-            "系統架構設計",
-            "AI應用整合",
+            "架構設計",
+            "AI應用",
             "POS系統",
             "LINE Bot",
-            "電子發票整合",
+            "電子發票",
             "智慧零售",
-            "專案領導",
-            "系統整合顧問",
+            "商用系統整合",
           ],
-          personalDetails: ["1966年 生於 台南市", "已婚 子女三人 皆已工作", "內子為公立托兒所護理師"],
+          personalDetails: ["1966年 生於 台南市", "已婚 子女三人", "內子為公立托兒所護理師"],
           education: {
             school: "國防大學 中正理工學院",
             department: "電機系電子工程組",
