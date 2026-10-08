@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eCard</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+    crossorigin="anonymous"
+  />
+  <style>
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #e9f5ff 0%, #f8f9fa 100%);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      color: #2b2d42;
+    }
+
+    .resume-card {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 30px 80px rgba(26, 54, 93, 0.18);
+      overflow: hidden;
+    }
+
+    .accent {
+      color: #0077b6;
+    }
+
+    .section-title {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #5a7184;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-achievements-title {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #001f3f;
+      margin-bottom: 0.75rem;
+    }
+
+    .timeline {
+      border-left: 3px solid #bee3f8;
+      padding-left: 1.5rem;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -1.72rem;
+      top: 0.2rem;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #0077b6;
+      box-shadow: 0 0 0 4px #e0f2ff;
+    }
+
+    .timeline-period {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #0f4c75;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+      display: block;
+    }
+
+    .resume-hero {
+      background: linear-gradient(135deg, rgba(0, 119, 182, 0.12), rgba(100, 181, 246, 0.12));
+      border-bottom: 1px solid rgba(0, 119, 182, 0.12);
+    }
+
+    .company-name {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #003366;
+      margin-bottom: 0.3rem;
+    }
+
+    .company-position {
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: #003366;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-name {
+      font-size: 2.6rem;
+      font-weight: 600;
+      color: #001f3f;
+    }
+
+    .hero-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #0077b6;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      margin-bottom: 0.25rem !important;
+    }
+
+    .tag-pill {
+      display: inline-block;
+      padding: 0.3rem 0.75rem;
+      margin: 0.15rem;
+      border-radius: 999px;
+      background: rgba(0, 119, 182, 0.08);
+      color: #11567d;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .contact-section .section-title {
+      font-size: 1.1rem;
+      color: #0f4c75;
+    }
+
+    .contact-section p {
+      font-size: 1.15rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .specialties-section .section-title {
+      font-size: 1.1rem;
+      color: #0f4c75;
+    }
+
+    .specialties-list li {
+      font-size: 1.15rem;
+      font-weight: 500;
+      margin-bottom: 0.35rem;
+    }
+
+    .important-experiences .timeline-item h5 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .important-experiences .timeline-item p {
+      font-size: 0.85rem;
+    }
+
+    .work-achievements .highlight-achievement {
+      background: linear-gradient(135deg, rgba(0, 119, 182, 0.12), rgba(100, 181, 246, 0.12));
+      border-radius: 14px;
+      padding: 1rem 1.25rem 1rem 1.5rem;
+      margin-left: -1.5rem;
+      box-shadow: 0 12px 30px rgba(0, 119, 182, 0.18);
+    }
+
+    .work-achievements .highlight-achievement::before {
+      left: -1.9rem;
+    }
+
+    .work-achievements .highlight-achievement-list li {
+      font-weight: 600;
+      color: #0c4a6e;
+    }
+
+    footer {
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <main class="py-5">
+      <div class="container">
+        <section>
+            <div class="resume-card">
+              <div class="resume-hero p-5">
+                <div class="row align-items-center g-4">
+                  <div class="col-md-4 text-center">
+                    <img src="../履歷照片01.PNG.jpg" alt="Lyndon Walker" class="img-fluid rounded-4 shadow" />
+                  </div>
+                  <div class="col-md-8">
+                    <div class="company-name">資傳數位有限公司</div>
+                    <div class="company-position">研發經理</div>
+                    <div class="hero-name">Lyndon Walker</div>
+                    <div class="hero-title mb-1">{{ heroTitle }}</div>
+                    <div class="hero-subtitle mb-3 text-primary fw-semibold">{{ heroSubtitle1 }}</div>
+                    <div class="hero-subtitle mb-3 text-primary fw-semibold">{{ heroSubtitle2 }}</div>
+                    <p class="lead text-secondary mb-4">{{ heroSummary }}</p>
+                    <div>
+                      <span class="tag-pill" v-for="tag in heroTags" :key="tag">{{ tag }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-5">
+                <div class="row g-5">
+                  <div class="col-lg-4">
+                    <div class="mb-5 contact-section">
+                      <p class="mb-2"><strong>地址：</strong>{{ contact.address }}</p>
+                      <p class="mb-2"><strong>郵箱：</strong><a :href="`mailto:${contact.email}`" class="text-decoration-none">{{ contact.email }}</a></p>
+                      <p class="mb-2"><strong>電話：</strong>{{ contact.companyPhone }}</p>
+                      <p class="mb-2"><strong>手機：</strong>{{ contact.phone }}</p>
+                    </div>
+
+                    <div class="mb-5 specialties-section">
+                      <div class="section-title">營業項目</div>
+                      <ul class="list-unstyled mb-0 specialties-list">
+                        <li v-for="(skill, index) in specialties" :key="`skill-${index}`">{{ skill }}</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-8">
+                    <div class="mb-2 work-achievements" style="margin-top: 0rem;">
+                      <div class="project-achievements-title">專案績效</div>
+                      <div v-for="category in projectAchievements" :key="category.category" class="mb-4">
+                        <h4 class="fw-bold mb-3" style="color: #0077b6;">{{ category.category }}</h4>
+                        <div class="timeline">
+                          <div
+                            class="timeline-item"
+                            v-for="project in category.projects"
+                            :key="project.period + project.company"
+                          >
+                            <span class="timeline-period">{{ project.period }} {{ project.company }}</span>
+                            <ul class="mb-0">
+                              <li v-for="(item, index) in project.items" :key="`proj-${project.period}-${index}`">{{ item }}</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mb-5">
+                      <div class="section-title">職涯信念</div>
+                      <blockquote class="blockquote ps-3 border-start border-4 border-primary">
+                        <p class="mb-0">「厚積而薄發，博觀而約取，深耕技術，勇於創新，工作專注，全力以赴。」</p>
+                      </blockquote>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <footer class="text-center py-4">© {{ currentYear }} Lyndon Walker。</footer>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          heroTitle: "軟體開發與系統整合專家",
+          heroSubtitle1: "Artificial Business Intelligence",
+          heroSubtitle2: "商用人工智能的先行者",
+          heroSummary:
+            "超過20年資訊系統開發與專案管理經驗，擅長軟硬體整合、智慧零售與餐飲系統、AI與LINE生態串接，協助企業完成數位轉型、AI賦能與營運創新。",
+          heroTags: [
+            "專案管理",
+            "架構設計",
+            "AI賦能",
+            "POS系統",
+            "企業ERP",
+            "LINE Bot",
+            "電子發票",
+            "智慧零售",
+            "商用系統整合",
+          ],
+          specialties: [
+            "● POS、ERP、LINE BOT",
+            "● 資訊系統專案開發",
+            "● 零售流通專業軟體",
+            "● AI賦能、數位轉型",
+            "● LLM整合應用開發",
+            "● RAG、知識圖譜技術",
+            "● 電子發票加值中心",
+            "● RFID整合開發",
+          ],
+          contact: {
+            address: "台北市100007中正區館前路2號12樓",
+            email: "digitrans.tw@gmail.com",
+            companyPhone: "02-6605-8186",
+            phone: "0921-191-693",
+          },
+          projectAchievements: [
+            {
+              category: "系統開發",
+              projects: [
+                {
+                  period: "2022~2025",
+                  company: "中保科技集團-京琠科技",
+                  items: [
+                    "開店快手餐飲版POS系統架構翻修",
+                    "QRCode掃碼點餐系統架構重新規劃",
+                    "開店快手軟體產品化、自動化版控",
+                    "開店快手總部系統雲端架構設計",
+                    "雲端系統、場館預訂系統架構設計開發",
+                    "智慧供應鏈",
+                  ],
+                },
+                {
+                  period: "2014~2021",
+                  company: "中保科技集團-博訊科技",
+                  items: [
+                    "集團電子發票加值中心系統設計開發、維運",
+                    "爭鮮迴轉壽司RFID鮮度管理系統",
+                    "爭鮮迴轉壽司AI影像辨識智慧上菜鮮度管理系統科專",
+                    "一条通自助點餐及軌道送餐系統",
+                    "開店快手Line Bot會員行銷系統",
+                    "開店快手POS系統維護",
+                    "長照2.0居家服務家訪系統",
+                    "防災消防監控系統",
+                    "石門水庫LoRa水文資訊系統",
+                    "自助點餐系統",
+                  ],
+                },
+              ],
+            },
+            {
+              category: "專案管理",
+              projects: [
+                {
+                  period: "2009~2011",
+                  company: "璞藝資訊",
+                  items: [
+                    "富邦文教基金會綜合活動管理系統",
+                    "工研院安全衛生技術中心「國家化學物質查詢系統」",
+                    "工研院安全衛生技術中心「管制性化學品運作量登錄流佈資訊服務平台」",
+                    "台北縣政府大型網站「北縣人力網(GoodJob)」改版專案",
+                    "台北市立美術館「北美獎徵件暨評審系統」、漾丰國際購物網",
+                  ],
+                },
+              ],
+            },
+            {
+              category: "POS系統",
+              projects: [
+                {
+                  period: "2004~2008",
+                  company: "新儀科技",
+                  items: [
+                    "科專計畫：工研院加工食品流通履歷科專計畫",
+                    "策略合作：國眾電腦、超網路科技策略聯盟推動『有機產業聚落深化專案』",
+                    "POS+DVR影像監控收銀設備系統整合",
+                    "與亞元國際、鎧騛資訊策略聯盟開發POS收銀整合RFID、語音辨識之智慧型自助結帳系統概念機並於2007 RFID大展進行成果發表展示。",
+                    "布魯樂谷遊樂園區POS系統",
+                    "外送外帶茶飲POS + 茶飲網站系統虛實整合專案",
+                    "烘焙、寵物、有機、服飾、母嬰用品、書局文具、超商超市、鐘錶精品、運動用品、小型旅宿、休息站賣場、導遊抽佣、3C商品序號管理、手機業、醫美管理系統、團膳系統、各類型餐飲業…等POS系統輔導專案。",
+                  ],
+                },
+              ],
+            },
+          ],
+        };
+      },
+      computed: {
+        currentYear() {
+          return new Date().getFullYear();
+        },
+      },
+    }).mount("#app");
+  </script>
+</body>
+</html>
